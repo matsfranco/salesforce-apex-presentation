@@ -27,7 +27,7 @@ public class DeviceMessageServiceTest {
     public static void testCreateDeviceMessageFromInput() {
         Test.startTest();
         
-        DeviceMessageInput deviceMessageInput = new DeviceMessageInput('Test','000100','Test from DeviceMessageServiceTest','Apex Test Class','Low','0502-00001',Datetime.now());
+        DeviceMessageInput deviceMessageInput = new DeviceMessageInput('ext_msg_id','Test','000100','Test from DeviceMessageServiceTest','Apex Test Class','Low','0502-00001',Datetime.now());
     	DeviceMessageService.createDeviceMessage(deviceMessageInput);
         
         List<DeviceMessage__c> messages = [SELECT id,Device__r.SerialNumber__c FROM DeviceMessage__c WHERE Name = '0502-00001/000100'];
@@ -40,7 +40,7 @@ public class DeviceMessageServiceTest {
     @isTest
     public static void testDeviceNotFount() {
        	Test.startTest(); 
-        DeviceMessageInput deviceMessageInput = new DeviceMessageInput('Test','000100','Test from DeviceMessageServiceTest','Apex Test Class','Low','0502-00003',Datetime.now());
+        DeviceMessageInput deviceMessageInput = new DeviceMessageInput('ext_msg_id','Test','000100','Test from DeviceMessageServiceTest','Apex Test Class','Low','0502-00003',Datetime.now());
         try {
             DeviceMessageService.createDeviceMessage(deviceMessageInput);
             List<DeviceMessage__c> messages = [SELECT Id FROM DeviceMessage__c];
@@ -54,7 +54,7 @@ public class DeviceMessageServiceTest {
     @isTest
     public static void testInvalidType() {
        	Test.startTest(); 
-        DeviceMessageInput deviceMessageInput = new DeviceMessageInput('Invalid Type','000100','Test from DeviceMessageServiceTest','Apex Test Class','Low','0502-00002',Datetime.now());
+        DeviceMessageInput deviceMessageInput = new DeviceMessageInput('ext_msg_id','Invalid Type','000100','Test from DeviceMessageServiceTest','Apex Test Class','Low','0502-00002',Datetime.now());
         try {
             DeviceMessageService.createDeviceMessage(deviceMessageInput);
             List<DeviceMessage__c> messages = [SELECT Id FROM DeviceMessage__c];

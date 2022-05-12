@@ -1,7 +1,4 @@
 public with sharing class CaseService {
-    public CaseService() {
-
-    }
 
     public static Boolean shouldCreateCase(String messageType) {
         if(messageType == 'Error' || messageType == 'Warning') {
@@ -10,7 +7,6 @@ public with sharing class CaseService {
             return false;
         }
     }
-
 
     public static void createCaseFromDeviceMessages(List<DeviceMessage__c> messages, Map<String,Device__c> serialNumberToDevice) {
         System.debug(messages);
