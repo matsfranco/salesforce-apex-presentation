@@ -33,17 +33,17 @@ public class DeviceMessageService {
             deviceSerialNumbers.add(message.deviceSerialNumber);
         }
 
-        List<Device__c> devices = [SELECT Id,SerialNumber__c FROM Device__c WHERE SerialNumber__c IN: deviceSerialNumbers];
-        Map<String,Id> deviceSerialNumberToId = new Map<String,Id>();
+        List<Device__c> devices = [SELECT Id,Name,Owner__c,Owner__r.AccountId,SerialNumber__c FROM Device__c WHERE SerialNumber__c IN: deviceSerialNumbers];
+        Map<String,Device__c> deviceSerialNumberToDevice = new Map<String,Device__c>();
         for(Device__c device : devices) {
-            deviceSerialNumberToId.put(device.SerialNumber__c,device.Id);
+            deviceSerialNumberToDevice.put(device.SerialNumber__c,device);
         } 
 
         List<DeviceMessage__c> messagesToInsert = new List<DeviceMessage__c>();
 
         for(DeviceMessageInput message : messages) {
             DeviceMessage__c newDeviceMessage = new DeviceMessage__c();
-            newDeviceMessage.Name = message.deviceSerialNumber + '/' + message.code;
+            newDeviceMessage.Name = message.messageId;
             newDeviceMessage.DeviceSerialNumber__c = message.deviceSerialNumber;
             newDeviceMessage.Body__c = message.messageBody;
             newDeviceMessage.Source__c = message.source;
@@ -51,10 +51,12 @@ public class DeviceMessageService {
             newDeviceMessage.Code__c = message.code;
             newDeviceMessage.Type__c = message.messageType;
             newDeviceMessage.DateTime__c = message.messageDateTime;
-            newDeviceMessage.Device__c = deviceSerialNumberToId.get(message.deviceSerialNumber);
+            newDeviceMessage.Device__c = deviceSerialNumberToDevice.get(message.deviceSerialNumber).Id;
             messagesToInsert.add(newDeviceMessage);
         }
         database.insert(messagesToInsert);
+
+        CaseService.createCaseFromDeviceMessages(messagesToInsert,deviceSerialNumberToDevice);
 
     }     
 }
