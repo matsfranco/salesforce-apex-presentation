@@ -12,10 +12,12 @@ public with sharing class PremiumWarranty extends StandardWarranty {
         products = new List<String>();
         products.add('STD product 1');
         products.add('STD product 2');
-        products.add('STD product 3');
-        products.add('PRIME product 1');
-        products.add('PRIME product 2');
-        products.add('PRIME product 3');
+        products.add('PREMIUM product 1');
+        products.add('PREMIUM product 2');
+    }
+
+    public void addNewProduct(String productName) {
+        this.products.add(productName);
     }
 
 }

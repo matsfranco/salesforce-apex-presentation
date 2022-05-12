@@ -19,7 +19,6 @@ public virtual class StandardWarranty {
         products = new List<String>();
         products.add('STD product 1');
         products.add('STD product 2');
-        products.add('STD product 3');
     }
 
     public void renew() {
