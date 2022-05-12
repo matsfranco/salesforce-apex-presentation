@@ -7,6 +7,4 @@ public class DeviceMessageInputTest {
     	System.assertEquals(newMessage.messageType,'test','Problems to create a simple DeviceMessageInput');
     }
     
-    
-    
 }
