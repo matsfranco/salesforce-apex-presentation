@@ -28,7 +28,7 @@ public class DeviceMessageServiceTest {
         Test.startTest();
         
         DeviceMessageInput deviceMessageInput = new DeviceMessageInput('Test','000100','Test from DeviceMessageServiceTest','Apex Test Class','Low','0502-00001',Datetime.now());
-    	DeviceMessageService.createNewDeviceMessage(deviceMessageInput);
+    	DeviceMessageService.createDeviceMessage(deviceMessageInput);
         
         List<DeviceMessage__c> messages = [SELECT id,Device__r.SerialNumber__c FROM DeviceMessage__c WHERE Name = '0502-00001/000100'];
         System.assertEquals(messages.size(), 1, 'No Device Message found');
@@ -42,7 +42,7 @@ public class DeviceMessageServiceTest {
        	Test.startTest(); 
         DeviceMessageInput deviceMessageInput = new DeviceMessageInput('Test','000100','Test from DeviceMessageServiceTest','Apex Test Class','Low','0502-00003',Datetime.now());
         try {
-            DeviceMessageService.createNewDeviceMessage(deviceMessageInput);
+            DeviceMessageService.createDeviceMessage(deviceMessageInput);
             List<DeviceMessage__c> messages = [SELECT Id FROM DeviceMessage__c];
             System.assertEquals(messages.size(),0,'Device found when it was not expected');
         } catch (Exception e) {
@@ -56,7 +56,7 @@ public class DeviceMessageServiceTest {
        	Test.startTest(); 
         DeviceMessageInput deviceMessageInput = new DeviceMessageInput('Invalid Type','000100','Test from DeviceMessageServiceTest','Apex Test Class','Low','0502-00002',Datetime.now());
         try {
-            DeviceMessageService.createNewDeviceMessage(deviceMessageInput);
+            DeviceMessageService.createDeviceMessage(deviceMessageInput);
             List<DeviceMessage__c> messages = [SELECT Id FROM DeviceMessage__c];
             System.assertEquals(messages.size(),0,'A Device Message was created with an invalid Picklist value');
         } catch (Exception e) {
