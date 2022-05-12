@@ -22,7 +22,6 @@ public class DeviceMessageServiceTest {
         database.insert(sampleDevicesToCreate);
     }
     
-    
     @isTest
     public static void testCreateDeviceMessageFromInput() {
         Test.startTest();
@@ -30,7 +29,9 @@ public class DeviceMessageServiceTest {
         DeviceMessageInput deviceMessageInput = new DeviceMessageInput('ext_msg_id','Test','000100','Test from DeviceMessageServiceTest','Apex Test Class','Low','0502-00001',Datetime.now());
     	DeviceMessageService.createDeviceMessage(deviceMessageInput);
         
-        List<DeviceMessage__c> messages = [SELECT id,Device__r.SerialNumber__c FROM DeviceMessage__c WHERE Name = '0502-00001/000100'];
+        List<DeviceMessage__c> messages = [ SELECT id,Device__r.SerialNumber__c 
+                                            FROM DeviceMessage__c 
+                                            WHERE Name = '0502-00001/000100' ];
         System.assertEquals(messages.size(), 1, 'No Device Message found');
         System.assertEquals(messages[0].Device__r.SerialNumber__c, deviceMessageInput.deviceSerialNumber, 'Problems to find the device record');
         

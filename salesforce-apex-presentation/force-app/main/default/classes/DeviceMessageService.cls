@@ -33,7 +33,10 @@ public class DeviceMessageService {
             deviceSerialNumbers.add(message.deviceSerialNumber);
         }
 
-        List<Device__c> devices = [SELECT Id,Name,Owner__c,Owner__r.AccountId,SerialNumber__c FROM Device__c WHERE SerialNumber__c IN: deviceSerialNumbers];
+        List<Device__c> devices = [ SELECT Id,Name,Owner__c,Owner__r.AccountId,SerialNumber__c 
+                                    FROM Device__c 
+                                    WHERE SerialNumber__c 
+                                    IN: deviceSerialNumbers ];
         Map<String,Device__c> deviceSerialNumberToDevice = new Map<String,Device__c>();
         for(Device__c device : devices) {
             deviceSerialNumberToDevice.put(device.SerialNumber__c,device);
