@@ -1,4 +1,4 @@
-public abstract class StandardWarranty {
+public virtual class StandardWarranty {
     
     public List<String> products;
     public Integer months;
@@ -7,8 +7,15 @@ public abstract class StandardWarranty {
     public Date startDate;
     public Date endDate; 
     
+    public StandardWarranty() {
+        months = 12;
+        createProductList();
+        status = 'new';
+        isActive = false;
+        System.debug('Nova Std Warranty criada!');
+    }
 
-    public void createProductList() {
+    public virtual void createProductList() {
         products = new List<String>();
         products.add('STD product 1');
         products.add('STD product 2');
@@ -16,8 +23,12 @@ public abstract class StandardWarranty {
     }
 
     public void renew() {
-        activate();
-        System.debug('Contrato renovado');
+        if(status != 'new') {
+            activate();
+            System.debug('Contrato renovado');
+        } else {
+            System.debug('Não renovado. Status precisa ser diferente de new');
+        }
     }
 
     public void block() {
@@ -48,5 +59,10 @@ public abstract class StandardWarranty {
             expire();
         }
     }
+
+    public String getData() {
+        return   'Status: '+status+' Start Date: '+startDate+' End Date: '+endDate+' Products: '+products;
+    }
     
+
 }
