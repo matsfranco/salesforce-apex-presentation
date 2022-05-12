@@ -28,6 +28,7 @@ public with sharing class CaseService {
                 newCase.Type = message.Type__c;
                 newCase.Reason = 'Automated Notification';
                 newCase.Subject = '['+message.Type__c+'] Erro notificado por '+device.Name;
+                newCase.Description = message.Body__c;
                 casesToInsert.add(newCase);
             }
         }
